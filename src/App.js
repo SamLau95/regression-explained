@@ -1,6 +1,14 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 
+import icecream from './icecream.json';
+
 import RegressionChart from './components/RegressionChart';
+
+const data = _.sortBy(
+  icecream.map(x => [x.liking_texture, x.overall]),
+  point => point[0],
+);
 
 export default class App extends Component {
   render() {
@@ -20,7 +28,7 @@ export default class App extends Component {
           this.
         </p>
 
-        <RegressionChart />
+        <RegressionChart data={data} />
       </section>
     </main>;
   }
