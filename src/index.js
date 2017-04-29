@@ -1,7 +1,10 @@
 import { AppContainer } from 'react-hot-loader';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import App from './App';
+
+import './index.css';
 
 const rootEl = document.getElementById('root');
 const render = Component =>
@@ -9,7 +12,7 @@ const render = Component =>
     <AppContainer>
       <Component />
     </AppContainer>,
-    rootEl
+    rootEl,
   );
 
 render(App);

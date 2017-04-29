@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
+
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -16,6 +18,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.json$/,
+        use: 'json-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.jsx?$/,
         use: [
           'babel-loader'
@@ -26,6 +33,8 @@ module.exports = {
   },
 
   plugins: [
+    new LodashModuleReplacementPlugin(),
+
     new HtmlWebpackPlugin({
       template: 'src/index.html',
     }),

@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
+
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 var DashboardPlugin = require('webpack-dashboard/plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
@@ -42,10 +44,21 @@ module.exports = {
         ],
         exclude: /node_modules/,
       },
+      {
+        test: /\.json$/,
+        use: 'json-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      }
     ],
   },
 
   plugins: [
+    new LodashModuleReplacementPlugin(),
+
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       alwaysWriteToDisk: true,
