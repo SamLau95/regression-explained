@@ -1,9 +1,9 @@
 {
-  "name": "react-hot-boilerplate",
+  "name": "regression-explained-visually",
   "version": "1.0.0",
-  "description": "Boilerplate for ReactJS project with hot code reloading",
+  "description": "Introduction to regression, explained visually",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dashboard -- webpack-dev-server",
     "lint": "eslint src",
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.production.js",
@@ -11,25 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gaearon/react-hot-boilerplate.git"
+    "url": "https://github.com/SamLau95/cs289-finalproj.git"
   },
-  "keywords": [
-    "react",
-    "reactjs",
-    "boilerplate",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
-  ],
-  "author": "Dan Abramov <dan.abramov@me.com> (http://github.com/gaearon)",
+  "keywords": [],
+  "author": "Sam Lau <samlau95@gmail.com> (http://github.com/SamLau95)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gaearon/react-hot-boilerplate/issues"
-  },
-  "homepage": "https://github.com/gaearon/react-hot-boilerplate",
+  "homepage": "https://github.com/SamLau95/cs289-finalproj",
   "devDependencies": {
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
@@ -41,12 +28,15 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "rimraf": "^2.6.0",
     "webpack": "^2.2.0",
+    "webpack-dashboard": "^0.4.0",
     "webpack-dev-server": "^2.2.0"
   },
   "dependencies": {
     "babel-eslint": "^7.1.1",
     "eslint": "^3.14.1",
     "eslint-plugin-react": "^6.9.0",
+    "html-webpack-harddisk-plugin": "^0.1.0",
+    "html-webpack-plugin": "^2.28.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   }

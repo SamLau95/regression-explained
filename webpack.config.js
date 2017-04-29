@@ -1,12 +1,15 @@
 var path = require('path');
 var webpack = require('webpack');
+var DashboardPlugin = require('webpack-dashboard/plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 
 module.exports = {
   entry: [
     'react-hot-loader/patch',
     // activate HMR for React
 
-    'webpack-dev-server/client?http://localhost:3000',
+    'webpack-dev-server/client?http://localhost:8080',
     // bundle the client for webpack-dev-server
     // and connect to the provided endpoint
 
@@ -22,7 +25,7 @@ module.exports = {
     filename: 'bundle.js',
     // the output bundle
 
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname),
 
     publicPath: '/static/'
     // necessary for HMR to know where to load the hot update chunks
@@ -43,6 +46,15 @@ module.exports = {
   },
 
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      alwaysWriteToDisk: true,
+    }),
+    // Load html files
+
+    new HtmlWebpackHarddiskPlugin(),
+    // Write html to file so dev server can serve it
+
     new webpack.HotModuleReplacementPlugin(),
     // enable HMR globally
 
@@ -51,11 +63,14 @@ module.exports = {
 
     new webpack.NoEmitOnErrorsPlugin(),
     // do not emit compiled assets that include errors
+
+    new DashboardPlugin(),
+    // Use webpack dashboard
   ],
 
   devServer: {
     host: 'localhost',
-    port: 3000,
+    port: 8080,
 
     historyApiFallback: true,
     // respond to 404s with index.html
