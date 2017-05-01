@@ -3,7 +3,8 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import SectionLinear from './SectionLinear';
+import Linear from './sections/Linear';
+import Polynomial from './sections/Polynomial';
 import reducer from './reducers/index';
 
 const store = createStore(reducer, composeWithDevTools());
@@ -26,7 +27,8 @@ export default class App extends Component {
           </a>
         </div>
 
-        <SectionLinear />
+        <Linear />
+        <Polynomial />
       </main>
     </Provider>;
   }

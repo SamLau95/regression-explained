@@ -6,13 +6,11 @@ import Flexbox from 'flexbox-react';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import icecream from './icecream.json';
+import DataMatrix from '../components/DataMatrix';
+import RegressionChart from '../components/RegressionChart';
+import { actions } from '../reducers/linear';
 
-import DataMatrix from './components/DataMatrix';
-import RegressionChart from './components/RegressionChart';
-import { actions } from './reducers/index';
-
-class SectionLinear extends React.Component {
+class Linear extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
 
@@ -32,10 +30,13 @@ class SectionLinear extends React.Component {
 
         <Flexbox justifyContent="space-between">
           <RegressionChart
+            title="Simple Linear Regression"
+            xLabel="Texture Rating"
+            yLabel="Overall Rating"
             width={400}
-            height={300}
+            height={400}
             axisBounds={{
-              x: { min: 4.5, max: 7 },
+              x: { min: 4, max: 7.5 },
               y: { min: 3.5, max: 7 },
             }}
             data={this.props.data}
@@ -58,4 +59,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SectionLinear);
+export default connect(mapStateToProps, mapDispatchToProps)(Linear);
