@@ -2,7 +2,6 @@
  * Renders a scatterplot with a regression line overlaid on top.
  */
 import _ from 'lodash';
-import LinearReg from 'ml-regression-simple-linear';
 import React, { PropTypes } from 'react';
 import ReactHighcharts from 'react-highcharts';
 import HighchartsDraggable from 'highcharts-draggable-points';
@@ -19,19 +18,22 @@ class RegressionChart extends React.Component {
     axisBounds: PropTypes.object,
 
     data: PropTypes.array.isRequired,
+    regression: PropTypes.object.isRequired,
     onPointDrop: PropTypes.func.isRequired,
   };
 
   _axisBounds() {
     if (this.props.axisBounds) return this.props.axisBounds;
+    const xs = this.props.data.map(p => p.x);
+    const ys = this.props.data.map(p => p.y);
     return {
       x: {
-        min: _.min(this.props.data.map(p => p.x)) - 0.5,
-        max: _.max(this.props.data.map(p => p.x)) + 0.5,
+        min: _.min(xs) - 0.5,
+        max: _.max(xs) + 0.5,
       },
       y: {
-        min: _.min(this.props.data.map(p => p.y)) - 0.5,
-        max: _.max(this.props.data.map(p => p.y)) + 0.5,
+        min: _.min(ys) - 0.5,
+        max: _.max(ys) + 0.5,
       },
     };
   }
@@ -70,11 +72,10 @@ class RegressionChart extends React.Component {
     const data = this.props.data;
     const { min, max } = this._axisBounds().x;
 
-    const linearReg = new LinearReg(data.map(p => p.x), data.map(p => p.y));
-    const linePoints = [
-      [min, linearReg.predict(min)],
-      [max, linearReg.predict(max)],
-    ];
+    const regressionPoints = _.range(min, max, 0.05).map(x => [
+      x,
+      this.props.regression.predict(x),
+    ]);
 
     return {
       ...this._chartSettings(),
@@ -98,8 +99,8 @@ class RegressionChart extends React.Component {
         },
         {
           type: 'line',
-          name: 'Regression line',
-          data: linePoints,
+          name: 'Regression',
+          data: regressionPoints,
           marker: {
             enabled: false,
           },
