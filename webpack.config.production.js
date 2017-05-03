@@ -37,7 +37,10 @@ module.exports = {
   },
 
   plugins: [
-    new LodashModuleReplacementPlugin(),
+    new LodashModuleReplacementPlugin({
+      'collections': true,
+      'shorthands': true,
+    }),
 
     new HtmlWebpackPlugin({
       template: 'src/index.html',

@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { createActions, handleActions } from 'redux-actions';
 
 import icecream from '../icecream.json';
-
 import colors from '../colors';
 
 const initialData = _.sortBy(
