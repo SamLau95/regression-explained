@@ -15,16 +15,13 @@ import { actions } from '../reducers/linear';
 class Linear extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
+    reg: PropTypes.object.isRequired,
 
     dispatch: PropTypes.func.isRequired,
     onPointDrop: PropTypes.func.isRequired,
   };
 
   render() {
-    const linearReg = new Regression('linear').fit(
-      this.props.data.map(p => [p.x, p.y]),
-    );
-
     return (
       <section>
         <h2>What is regression?</h2>
@@ -46,7 +43,7 @@ class Linear extends React.Component {
               y: { min: 3.5, max: 7 },
             }}
             data={this.props.data}
-            regression={linearReg}
+            regression={this.props.reg}
             onPointDrop={this.props.onPointDrop}
           />
           <DataMatrix data={this.props.data} col="x" />
@@ -54,7 +51,7 @@ class Linear extends React.Component {
         </Flexbox>
 
         <Equation
-          eqn={linearReg.equation()}
+          eqn={this.props.reg.equation()}
           xName="Texture"
           yName="Overall rating"
         />

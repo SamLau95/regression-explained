@@ -16,26 +16,15 @@ import Spacer from '../layout/Spacer';
 class Validation extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
+    linearReg: PropTypes.object.isRequired,
+    polyReg2: PropTypes.object.isRequired,
+    polyReg5: PropTypes.object.isRequired,
 
     dispatch: PropTypes.func.isRequired,
     onPointDrop: PropTypes.func.isRequired,
   };
 
   render() {
-    const data = this.props.data.map(p => [p.x, p.y]);
-
-    const linearReg = new Regression(
-      'linear',
-    ).fit(data);
-    const polyReg2 = new Regression(
-      'polynomial',
-      2,
-    ).fit(data);
-    const polyReg5 = new Regression(
-      'polynomial',
-      5,
-    ).fit(data);
-
     return (
       <section>
         <h2>Using a Validation Set</h2>
@@ -50,7 +39,7 @@ class Validation extends React.Component {
         </Flexbox>
         <Spacer amount={20} />
         <Equation
-          eqn={linearReg.equation()}
+          eqn={this.props.linearReg.equation()}
           xName="Sweet"
           yName="Overall rating"
         />
@@ -68,7 +57,7 @@ class Validation extends React.Component {
         </Flexbox>
         <Spacer amount={20} />
         <Equation
-          eqn={polyReg2.equation()}
+          eqn={this.props.polyReg2.equation()}
           xName="Sweet"
           yName="Overall rating"
         />
@@ -86,7 +75,7 @@ class Validation extends React.Component {
         </Flexbox>
         <Spacer amount={20} />
         <Equation
-          eqn={polyReg5.equation()}
+          eqn={this.props.polyReg5.equation()}
           yName="Overall rating"
         />
       </section>

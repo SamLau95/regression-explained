@@ -4,6 +4,8 @@ import { createActions, handleActions } from 'redux-actions';
 import icecream from '../icecream.json';
 import colors from '../colors';
 
+import Regression from '../Regression';
+
 const initialData = _.sortBy(
   icecream,
   point => point.liking_texture,
@@ -14,8 +16,13 @@ const initialData = _.sortBy(
   index,
 }));
 
+const initialReg = new Regression('linear').fit(
+  initialData.map(p => [p.x, p.y]),
+);
+
 const initialState = {
   data: initialData,
+  reg: initialReg,
 };
 
 export const actions = createActions({
@@ -29,11 +36,15 @@ export default handleActions(
     [actions.linear.setDatum]: (state, action) => {
       const [index, point] = action.payload;
 
-      return Object.assign({}, state, {
-        data: Object.assign(state.data.slice(), {
-          [index]: { ...point, color: colors[index] },
-        }),
-      });
+      const data = Object.assign(state.data.slice(), {
+        [index]: { ...point, color: colors[index] },
+      })
+
+      const reg = new Regression('linear').fit(
+        data.map(p => [p.x, p.y]),
+      );
+
+      return Object.assign({}, state, { data, reg });
     },
   },
   initialState,

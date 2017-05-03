@@ -6,12 +6,12 @@ const POLYNOMIAL = 'polynomial';
  * Note that the data has to be in [x, y] format
  */
 class Regression {
-  constructor(method, degree = 5) {
+  constructor(method, degree = 1) {
     this.method = method;
     this.degree = degree;
   }
 
-  fit(data, degree = 5) {
+  fit(data) {
     this.reg = regression(this.method, data, this.degree);
     return this;
   }

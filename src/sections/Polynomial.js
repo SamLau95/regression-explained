@@ -16,26 +16,15 @@ import Spacer from '../layout/Spacer';
 class Polynomial extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
+    linearReg: PropTypes.object.isRequired,
+    polyReg2: PropTypes.object.isRequired,
+    polyReg5: PropTypes.object.isRequired,
 
     dispatch: PropTypes.func.isRequired,
     onPointDrop: PropTypes.func.isRequired,
   };
 
   render() {
-    const data = this.props.data.map(p => [p.x, p.y]);
-
-    const linearReg = new Regression(
-      'linear',
-    ).fit(data);
-    const polyReg2 = new Regression(
-      'polynomial',
-      2,
-    ).fit(data);
-    const polyReg5 = new Regression(
-      'polynomial',
-      5,
-    ).fit(data);
-
     return (
       <section>
         <h2>Polynomial Regression</h2>
@@ -55,7 +44,7 @@ class Polynomial extends React.Component {
               y: { min: 3.5, max: 7 },
             }}
             data={this.props.data}
-            regression={linearReg}
+            regression={this.props.linearReg}
             onPointDrop={this.props.onPointDrop}
           />
           <DataMatrix data={this.props.data} col={'x'} />
@@ -63,7 +52,7 @@ class Polynomial extends React.Component {
         </Flexbox>
 
         <Equation
-          eqn={linearReg.equation()}
+          eqn={this.props.linearReg.equation()}
           xName="Sweet"
           yName="Overall rating"
         />
@@ -82,7 +71,7 @@ class Polynomial extends React.Component {
               y: { min: 3.5, max: 7 },
             }}
             data={this.props.data}
-            regression={polyReg2}
+            regression={this.props.polyReg2}
             onPointDrop={this.props.onPointDrop}
           />
           <DataMatrix
@@ -95,7 +84,7 @@ class Polynomial extends React.Component {
         </Flexbox>
 
         <Equation
-          eqn={polyReg2.equation()}
+          eqn={this.props.polyReg2.equation()}
           xName="Sweet"
           yName="Overall rating"
         />
@@ -113,7 +102,7 @@ class Polynomial extends React.Component {
             y: { min: 3.5, max: 7 },
           }}
           data={this.props.data}
-          regression={polyReg5}
+          regression={this.props.polyReg5}
           onPointDrop={this.props.onPointDrop}
         />
         <Flexbox>
@@ -127,7 +116,7 @@ class Polynomial extends React.Component {
         </Flexbox>
         <Spacer amount={20} />
         <Equation
-          eqn={polyReg5.equation()}
+          eqn={this.props.polyReg5.equation()}
           yName="Overall rating"
         />
       </section>
