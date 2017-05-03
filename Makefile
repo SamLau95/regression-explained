@@ -24,4 +24,4 @@ deploy: build
 	git add -A
 	git commit -m 'Deploy'
 	git push origin master
-	@echo "${BLUE}Done! Results at samlau.me/camera-interact${NOCOLOR}."
+	@echo "${BLUE}Done! Results at samlau.me/regression-explained${NOCOLOR}."
