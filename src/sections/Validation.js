@@ -1,5 +1,5 @@
 /**
- * Section on polynomial regression.
+ * Section on using a validation set.
  */
 import _ from 'lodash';
 import Flexbox from 'flexbox-react';
@@ -13,7 +13,7 @@ import Regression from '../Regression';
 import RegressionChart from '../components/RegressionChart';
 import Spacer from '../layout/Spacer';
 
-class Polynomial extends React.Component {
+class Validation extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
 
@@ -38,30 +38,17 @@ class Polynomial extends React.Component {
 
     return (
       <section>
-        <h2>Polynomial Regression</h2>
+        <h2>Using a Validation Set</h2>
         <p>
-          What if our data have a nonlinear pattern?
+          How can we choose the best polynomial degree for our data? Let's take
+          a look at the training error.
         </p>
 
-        <Flexbox justifyContent="space-between">
-          <RegressionChart
-            title="Linear Regression?..."
-            xLabel="Sweetness"
-            yLabel="Overall Rating"
-            width={400}
-            height={400}
-            axisBounds={{
-              x: { min: 0, max: 15 },
-              y: { min: 3.5, max: 7 },
-            }}
-            data={this.props.data}
-            regression={linearReg}
-            onPointDrop={this.props.onPointDrop}
-          />
+        <Flexbox>
           <DataMatrix data={this.props.data} col={'x'} />
           <DataMatrix data={this.props.data} col={'y'} />
         </Flexbox>
-
+        <Spacer amount={20} />
         <Equation
           eqn={linearReg.equation()}
           xName="Sweet"
@@ -71,20 +58,6 @@ class Polynomial extends React.Component {
         <Spacer />
 
         <Flexbox>
-          <RegressionChart
-            title="Polynomial Regression, degree 2"
-            xLabel="Sweetness"
-            yLabel="Overall Rating"
-            width={400}
-            height={400}
-            axisBounds={{
-              x: { min: 0, max: 15 },
-              y: { min: 3.5, max: 7 },
-            }}
-            data={this.props.data}
-            regression={polyReg2}
-            onPointDrop={this.props.onPointDrop}
-          />
           <DataMatrix
             data={this.props.data}
             col={'x'}
@@ -93,7 +66,7 @@ class Polynomial extends React.Component {
           />
           <DataMatrix data={this.props.data} col={'y'} />
         </Flexbox>
-
+        <Spacer amount={20} />
         <Equation
           eqn={polyReg2.equation()}
           xName="Sweet"
@@ -102,20 +75,6 @@ class Polynomial extends React.Component {
 
         <Spacer />
 
-        <RegressionChart
-          title="Polynomial Regression, degree 5"
-          xLabel="Sweetness"
-          yLabel="Overall Rating"
-          width={400}
-          height={400}
-          axisBounds={{
-            x: { min: 0, max: 15 },
-            y: { min: 3.5, max: 7 },
-          }}
-          data={this.props.data}
-          regression={polyReg5}
-          onPointDrop={this.props.onPointDrop}
-        />
         <Flexbox>
           <DataMatrix
             data={this.props.data}
@@ -144,4 +103,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Polynomial);
+export default connect(mapStateToProps, mapDispatchToProps)(Validation);

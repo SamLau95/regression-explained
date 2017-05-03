@@ -20,6 +20,20 @@ h3 {
   line-height:1.2
 }
 
-.author {
-  font-size: 0.8em;
+section {
+  margin-bottom: 4em;
 }
+
+.masthead {
+  text-align: center;
+  margin-bottom: 4em;
+}
+
+  .masthead__title {
+    margin-bottom: 0.3em;
+  }
+
+  .masthead__author {
+    font-size: 0.8em;
+  }
+

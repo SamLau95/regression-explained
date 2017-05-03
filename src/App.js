@@ -5,6 +5,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import Linear from './sections/Linear';
 import Polynomial from './sections/Polynomial';
+import Validation from './sections/Validation';
+
 import reducer from './reducers/index';
 
 const store = createStore(reducer, composeWithDevTools());
@@ -20,15 +22,18 @@ export default class App extends Component {
   render() {
     return <Provider store={store}>
       <main>
-        <h1>Regression, Explained Visually</h1>
-        <div className="author">
-          <a href="http://www.samlau.me/" rel="author" target="_blank">
-            by Sam Lau
-          </a>
+        <div className="masthead">
+          <h1 className="masthead__title">Regression, Explained Visually</h1>
+          <div className="masthead__author">
+            <a href="http://www.samlau.me/" rel="author" target="_blank">
+              by Sam Lau
+            </a>
+          </div>
         </div>
 
         <Linear />
         <Polynomial />
+        <Validation />
       </main>
     </Provider>;
   }
