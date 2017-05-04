@@ -3,8 +3,9 @@
  */
 
 import _ from 'lodash';
-import katex from 'katex';
 import React, { PropTypes } from 'react';
+
+import Katex from './Katex';
 
 class DataMatrix extends React.Component {
   static propTypes = {
@@ -27,7 +28,7 @@ class DataMatrix extends React.Component {
       .join(' & ');
   }
 
-  _renderMatrix() {
+  render() {
     const label = this.props.label ? this.props.label : this.props.col;
     const matrix = `\\begin{array}{c}
       ${label} \\\\
@@ -39,19 +40,7 @@ class DataMatrix extends React.Component {
       \\end{bmatrix}
     \\end{array}`
 
-    katex.render(matrix, this.el);
-  }
-
-  componentDidMount() {
-    this._renderMatrix();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    this._renderMatrix();
-  }
-
-  render() {
-    return <div ref={el => this.el = el} />;
+    return <Katex math={matrix} />
   }
 }
 

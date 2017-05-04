@@ -1,6 +1,8 @@
 import katex from 'katex';
 import React, { PropTypes } from 'react';
 
+import Katex from './Katex';
+
 const TO_REPLACE_X = new RegExp('x', 'g');
 const TO_REPLACE_Y = 'y';
 
@@ -15,7 +17,7 @@ class Equation extends React.Component {
     yName: PropTypes.string,
   };
 
-  _renderEqn() {
+  render() {
     let eqn = this.props.eqn.replace(TO_REPLACE_PLUS_MINUS, '-');
 
     // This is clearly buggy but whatever...
@@ -26,19 +28,7 @@ class Equation extends React.Component {
       eqn = eqn.replace(TO_REPLACE_Y, `\\text{${this.props.yName}}`)
     }
 
-    katex.render(eqn, this.el);
-  }
-
-  componentDidMount() {
-    this._renderEqn();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    this._renderEqn();
-  }
-
-  render() {
-    return <div ref={el => this.el = el} />;
+    return <Katex math={eqn} />;
   }
 }
 
