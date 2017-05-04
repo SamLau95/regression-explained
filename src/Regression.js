@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import regression from 'regression';
 
 const POLYNOMIAL = 'polynomial';
@@ -25,6 +26,10 @@ class Regression {
 
     const [slope, intercept] = this.reg.equation;
     return slope * x + intercept;
+  }
+
+  coef() {
+    return this.reg.equation.map(n => _.round(n, 2));
   }
 
   equation() {

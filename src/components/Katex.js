@@ -7,6 +7,12 @@ import React, { PropTypes } from 'react';
 class Katex extends React.Component {
   static propTypes = {
     math: PropTypes.string.isRequired,
+
+    inline: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    inline: false,
   };
 
   _renderMath() {
@@ -22,7 +28,9 @@ class Katex extends React.Component {
   }
 
   render() {
-    return <div ref={el => this.el = el} />;
+    return this.props.inline ?
+      <spam ref={el => this.el = el} /> :
+      <div ref={el => this.el = el} />;
   }
 }
 
