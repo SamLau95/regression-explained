@@ -19,7 +19,15 @@ class RegressionChart extends React.Component {
 
     data: PropTypes.array.isRequired,
     regression: PropTypes.object.isRequired,
-    onPointDrop: PropTypes.func.isRequired,
+    onPointDrop: PropTypes.func,
+    dragEnabled: PropTypes.bool,
+
+    validation: PropTypes.array,
+  };
+
+  static defaultProps = {
+    onPointDrop: _.identity,
+    dragEnabled: true,
   };
 
   _axisBounds() {
@@ -69,24 +77,24 @@ class RegressionChart extends React.Component {
   }
 
   _updateChart() {
-    const data = this.props.data;
+    const { data, validation } = this.props;
     const { min, max } = this._axisBounds().x;
 
-    const regressionPoints = _.range(min, max, 0.05).map(x => [
+    const regressionPoints = _.range(min, max, 0.1).map(x => [
       x,
       this.props.regression.predict(x),
     ]);
 
-    return {
+    const settingsWithData = {
       ...this._chartSettings(),
       series: [
         {
           type: 'scatter',
           name: 'Observations',
           data: data,
-          draggableX: true,
+          draggableX: this.props.dragEnabled,
+          draggableY: this.props.dragEnabled,
           dragPrecisionX: 0.25,
-          draggableY: true,
           dragPrecisionY: 0.5,
           point: {
             events: {
@@ -112,6 +120,17 @@ class RegressionChart extends React.Component {
         },
       ],
     };
+
+    if (this.props.validation) {
+      settingsWithData.series.push({
+        type: 'scatter',
+        name: 'Validation',
+        data: validation,
+        color: '0x333333',
+      });
+    }
+
+    return settingsWithData;
   }
 
   render() {

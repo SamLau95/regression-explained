@@ -7,19 +7,12 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { actions } from '../reducers/trainingError';
-import DataMatrix, { matrixMath } from '../components/DataMatrix';
+import { matrixMath } from '../components/DataMatrix';
 import Equation from '../components/Equation';
 import Katex from '../components/Katex';
 import Regression from '../Regression';
 import RegressionChart from '../components/RegressionChart';
 import Spacer from '../layout/Spacer';
-
-function _leastSquaresCost(data, predictions) {
-  const sumErrs = _.zip(data, predictions)
-    .map(([point, prediction]) => Math.pow(point.y - prediction.yHat, 2))
-    .reduce((val, err) => val + err);
-  return sumErrs / data.length;
-}
 
 class TrainingError extends React.Component {
   static propTypes = {
@@ -34,63 +27,34 @@ class TrainingError extends React.Component {
   };
 
   render() {
-    const linearPred = this.props.data.map(p => ({
-      yHat: this.props.linearReg.predict(p.x),
-      color: p.color,
-    }));
-    const poly2Pred = this.props.data.map(p => ({
-      yHat: this.props.polyReg2.predict(p.x),
-      color: p.color,
-    }));
-    const poly5Pred = this.props.data.map(p => ({
-      yHat: this.props.polyReg5.predict(p.x),
-      color: p.color,
-    }));
-    const poly10Pred = this.props.data.map(p => ({
-      yHat: this.props.polyReg10.predict(p.x),
-      color: p.color,
-    }));
+    const clfs = {
+      linear: this.props.linearReg,
+      poly2: this.props.polyReg2,
+      poly5: this.props.polyReg5,
+      poly10: this.props.polyReg10,
+    };
 
-    const linCost = _.round(_leastSquaresCost(this.props.data, linearPred), 2);
-    const poly2Cost = _.round(
-      _leastSquaresCost(this.props.data, poly2Pred),
-      2,
-    );
-    const poly5Cost = _.round(
-      _leastSquaresCost(this.props.data, poly5Pred),
-      2,
-    );
-    const poly10Cost = _.round(
-      _leastSquaresCost(this.props.data, poly10Pred),
-      2,
+    const predictions = _.mapValues(clfs, clf =>
+      this.props.data.map(p => ({
+        yHat: clf.predict(p.x),
+        color: p.color,
+      })),
     );
 
-    const linYHat = matrixMath(linearPred, 'yHat', '\\hat{y}');
-    const poly2YHat = matrixMath(poly2Pred, 'yHat', '\\hat{y}');
-    const poly5YHat = matrixMath(poly5Pred, 'yHat', '\\hat{y}');
-    const poly10YHat = matrixMath(poly10Pred, 'yHat', '\\hat{y}');
+    const costs = _.mapValues(clfs, (clf, type) =>
+      clf.cost(predictions[type]),
+    );
 
     const yVec = matrixMath(this.props.data, 'y');
-    const linCostMath = `J =
-    \\frac{1}{n} \\sum
-    \\left(${yVec} - ${linYHat} \\right)^2
-    = ${linCost}
-    `;
-    const poly2CostMath = `J =
-    \\frac{1}{n} \\sum
-    \\left(${yVec} - ${poly2YHat} \\right)^2
-    = ${poly2Cost}
-    `;
-    const poly5CostMath = `J =
-    \\frac{1}{n} \\sum
-    \\left(${yVec} - ${poly5YHat} \\right)^2
-    = ${poly5Cost}
-    `;
-    const poly10CostMath = `J =
-    \\frac{1}{n} \\sum
-    \\left(${yVec} - ${poly10YHat} \\right)^2
-    = ${poly10Cost}
-    `;
+    const matrixMaths = _.mapValues(predictions, pred =>
+      matrixMath(pred, 'yHat', '\\hat{y}'),
+    );
+
+    const costMaths = _.mapValues(matrixMaths, (math, type) => `J =
+      \\frac{1}{n} \\sum
+      \\left(${yVec} - ${math} \\right)^2
+      = ${costs[type]}
+    `)
 
     return (
       <section>
@@ -120,7 +84,7 @@ class TrainingError extends React.Component {
             regression={this.props.linearReg}
             onPointDrop={this.props.onPointDrop}
           />
-          <Katex math={linCostMath} />
+          <Katex math={costMaths.linear} />
         </Flexbox>
 
         <p>For polynomial regression with degree 2:</p>
@@ -140,7 +104,7 @@ class TrainingError extends React.Component {
             regression={this.props.polyReg2}
             onPointDrop={this.props.onPointDrop}
           />
-          <Katex math={poly2CostMath} />
+          <Katex math={costMaths.poly2} />
         </Flexbox>
 
         <p>For polynomial regression with degree 5:</p>
@@ -160,7 +124,7 @@ class TrainingError extends React.Component {
             regression={this.props.polyReg5}
             onPointDrop={this.props.onPointDrop}
           />
-          <Katex math={poly5CostMath} />
+          <Katex math={costMaths.poly5} />
         </Flexbox>
 
         <p>
@@ -193,14 +157,15 @@ class TrainingError extends React.Component {
             regression={this.props.polyReg10}
             onPointDrop={this.props.onPointDrop}
           />
-          <Katex math={poly10CostMath} />
+          <Katex math={costMaths.poly10} />
         </Flexbox>
 
         <p>
           A degree 10 polynomial is clearly not great because just a small
           change in our data collection results in completely different
-          predictions. However, it always has the best error. How else can we
-          figure out which type of regression is best?
+          predictions: this model lacks <em>robustness</em>. However, it always
+          has the best error. How else can we figure out which type of
+          regression is best?
         </p>
       </section>
     );

@@ -13,6 +13,7 @@ class Regression {
   }
 
   fit(data) {
+    this.data = data;
     this.reg = regression(this.method, data.map(p => [p.x, p.y]), this.degree);
     return this;
   }
@@ -34,6 +35,23 @@ class Regression {
 
   equation() {
     return this.reg.string;
+  }
+
+  // Allow passing in predictions to save computation
+  cost(predictions = null, round = true) {
+    let preds = predictions;
+
+    if (!preds) {
+      preds = this.data.map(p => ({
+        yHat: this.reg.predict(p.x),
+      }));
+    }
+
+    const sumErrs = _.zip(this.data, preds)
+      .map(([point, pred]) => Math.pow(point.y - pred.yHat, 2))
+      .reduce((val, err) => val + err);
+
+    return _.round(sumErrs / this.data.length, 2);
   }
 }
 
