@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import Linear from './sections/Linear';
 import Polynomial from './sections/Polynomial';
-import Validation from './sections/Validation';
+import TrainingError from './sections/TrainingError';
 
 import reducer from './reducers/index';
 
@@ -33,7 +33,7 @@ export default class App extends Component {
 
         <Linear />
         <Polynomial />
-        <Validation />
+        <TrainingError />
       </main>
     </Provider>;
   }

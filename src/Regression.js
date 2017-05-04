@@ -13,7 +13,7 @@ class Regression {
   }
 
   fit(data) {
-    this.reg = regression(this.method, data, this.degree);
+    this.reg = regression(this.method, data.map(p => [p.x, p.y]), this.degree);
     return this;
   }
 

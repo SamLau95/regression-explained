@@ -20,8 +20,12 @@ h3 {
   line-height:1.2
 }
 
+p {
+  margin: 1.5em 0;
+}
+
 section {
-  margin-bottom: 4em;
+  margin-bottom: 3em;
 }
 
 .masthead {

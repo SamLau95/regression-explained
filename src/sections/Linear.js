@@ -99,7 +99,7 @@ class Linear extends React.Component {
         <Equation
           eqn={this.props.reg.equation()}
           xName="Texture"
-          yName="Overall rating"
+          yName="Predicted rating"
         />
 
         <p>

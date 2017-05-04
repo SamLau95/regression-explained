@@ -29,7 +29,7 @@ class Katex extends React.Component {
 
   render() {
     return this.props.inline ?
-      <spam ref={el => this.el = el} /> :
+      <span ref={el => this.el = el} /> :
       <div ref={el => this.el = el} />;
   }
 }

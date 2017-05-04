@@ -29,7 +29,10 @@ class Polynomial extends React.Component {
       <section>
         <h2>Polynomial Regression</h2>
         <p>
-          What if our data have a nonlinear pattern?
+          So what if our data don't follow a simple line? Here we plot the
+          overall rating against the sweetness of the ice cream. It makes sense
+          that people would like sweet ice cream but after a certain point the
+          ice cream would be too sweet to enjoy.
         </p>
 
         <Flexbox justifyContent="space-between">
@@ -57,9 +60,13 @@ class Polynomial extends React.Component {
           yName="Overall rating"
         />
 
-        <Spacer />
+        <p>
+          Clearly, the data don't follow a simple linear pattern. How can we
+          address this? Well, instead of fitting a line, let's fit a
+          polynomial!
+        </p>
 
-        <Flexbox>
+        <Flexbox justifyContent="space-between">
           <RegressionChart
             title="Polynomial Regression, degree 2"
             xLabel="Sweetness"
@@ -74,12 +81,7 @@ class Polynomial extends React.Component {
             regression={this.props.polyReg2}
             onPointDrop={this.props.onPointDrop}
           />
-          <DataMatrix
-            data={this.props.data}
-            col={'x'}
-            label={'X'}
-            degree={2}
-          />
+          <DataMatrix data={this.props.data} col={'x'} />
           <DataMatrix data={this.props.data} col={'y'} />
         </Flexbox>
 
@@ -89,29 +91,28 @@ class Polynomial extends React.Component {
           yName="Overall rating"
         />
 
-        <Spacer />
+        <p>
+          But this begs the question: why not keep increasing the degree of the
+          polynomial? Drag the points on any of charts to see all of these
+          charts recalculate their regression curves.
+        </p>
 
-        <RegressionChart
-          title="Polynomial Regression, degree 5"
-          xLabel="Sweetness"
-          yLabel="Overall Rating"
-          width={400}
-          height={400}
-          axisBounds={{
-            x: { min: 0, max: 15 },
-            y: { min: 3.5, max: 7 },
-          }}
-          data={this.props.data}
-          regression={this.props.polyReg5}
-          onPointDrop={this.props.onPointDrop}
-        />
-        <Flexbox>
-          <DataMatrix
+        <Flexbox justifyContent="space-between">
+          <RegressionChart
+            title="Polynomial Regression, degree 5"
+            xLabel="Sweetness"
+            yLabel="Overall Rating"
+            width={400}
+            height={400}
+            axisBounds={{
+              x: { min: 0, max: 15 },
+              y: { min: 3.5, max: 7 },
+            }}
             data={this.props.data}
-            col={'x'}
-            label={'X'}
-            degree={5}
+            regression={this.props.polyReg5}
+            onPointDrop={this.props.onPointDrop}
           />
+          <DataMatrix data={this.props.data} col={'x'} />
           <DataMatrix data={this.props.data} col={'y'} />
         </Flexbox>
         <Spacer amount={20} />
@@ -119,6 +120,15 @@ class Polynomial extends React.Component {
           eqn={this.props.polyReg5.equation()}
           yName="Overall rating"
         />
+
+        <p>
+          When you drag around the points, you'll notice that the degree 5
+          polynomial feels pretty unstable; changing a point makes it jump all
+          over the place. In this case, it's pretty clear that the degree 2
+          polynomial is best. However, that might not always be the case for
+          all scenarios. Sometimes a degree 5 polynomial is what we want. How
+          can we decide which degree polynomial to use?
+        </p>
       </section>
     );
   }

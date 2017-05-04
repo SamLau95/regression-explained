@@ -16,9 +16,7 @@ const initialData = _.sortBy(
   index,
 }));
 
-const initialReg = new Regression('linear').fit(
-  initialData.map(p => [p.x, p.y]),
-);
+const initialReg = new Regression('linear').fit(initialData);
 
 const initialState = {
   data: initialData,
@@ -40,9 +38,7 @@ export default handleActions(
         [index]: { ...point, color: colors[index] },
       })
 
-      const reg = new Regression('linear').fit(
-        data.map(p => [p.x, p.y]),
-      );
+      const reg = new Regression('linear').fit(data);
 
       return Object.assign({}, state, { data, reg });
     },
