@@ -93,8 +93,8 @@ class Polynomial extends React.Component {
 
         <p>
           But this begs the question: why not keep increasing the degree of the
-          polynomial? Drag the points on any of charts to see all of these
-          charts recalculate their regression curves.
+          polynomial? Drag the points on any of these charts to see them
+          recalculate their regression curves.
         </p>
 
         <Flexbox justifyContent="space-between">
