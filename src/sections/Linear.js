@@ -71,10 +71,10 @@ class Linear extends React.Component {
         </p>
 
         <p>
-          It's pretty obvious that the higher the texture rating, the higher
-          the overall rating. We want to fit a line to the data to show that.
-          Regression chooses the best line for us. Try dragging the points
-          around and see how the regression line changes!
+          We can expect that the better the texture, the higher the overall
+          rating. We want to fit a line to the data to show that. Regression
+          chooses the best line for us. Try dragging the points around and see
+          how the regression line changes!
         </p>
 
         <Flexbox justifyContent="space-between">
