@@ -11,8 +11,3 @@ cross-validation.
 Here's the intro video for project:
 
 [![video](gifs/video.png)](https://youtu.be/vZ9kInQrq-c)
-
-This web app was created as a final project for Berkeley's Machine Learning
-class, [CS289A][289].
-
-[289]: https://people.eecs.berkeley.edu/~jrs/189/
